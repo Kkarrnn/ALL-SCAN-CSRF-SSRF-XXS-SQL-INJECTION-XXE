@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            color: #333;
+        }
+        .result-box {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+        }
+        h2 {
+            margin-top: 0;
+            color: #007bff;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+        }
+        li:last-child {
+            border-bottom: none;
+        }
+        .error {
+            color: #ff0000;
+            font-weight: bold;
+        }
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Scan Results</h1>
+
+        {% if results.errors %}
+            <p class="error">{{ results.errors }}</p>
+        {% endif %}
+
+        {% if results.csrf %}
+            <div class="result-box">
+                <h2>CSRF Results</h2>
+                <ul>
+                    {% for result in results.csrf %}
+                        <li>{{ result }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        {% if results.ssrf %}
+            <div class="result-box">
+                <h2>SSRF Results</h2>
+                <ul>
+                    {% for result in results.ssrf %}
+                        <li>{{ result }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        {% if results.xxe %}
+            <div class="result-box">
+                <h2>XXE Results</h2>
+                <ul>
+                    {% for result in results.xxe %}
+                        <li>{{ result }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        {% if results.sql_injection %}
+            <div class="result-box">
+                <h2>SQL Injection Results</h2>
+                <ul>
+                    {% for result in results.sql_injection %}
+                        <li>{{ result }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        {% if results.xss %}
+            <div class="result-box">
+                <h2>XSS Results</h2>
+                <ul>
+                    {% for result in results.xss %}
+                        <li>{{ result }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        <a href="/">Back</a>
+    </div>
+</body>
+</html>

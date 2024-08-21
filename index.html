@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Security Tool</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Security Tool</h1>
+        <form action="/" method="POST">
+            <label for="url">Enter URL:</label>
+            <input type="text" id="url" name="url" placeholder="http://example.com?url=TARGET" required>
+
+            <label for="tool">Select Tool:</label>
+            <select id="tool" name="tool" required onchange="showParamInput(this.value)">
+                <option value="1">CSRF Detection</option>
+                <option value="2">SSRF Detection</option>
+                <option value="3">XXE Detection</option>
+                <option value="4">SQL Injection Detection</option>
+                <option value="5">XSS Detection</option>
+                <option value="6">Run All</option>
+            </select>
+
+            <div id="paramDiv" style="display: none;">
+                <label for="param">Enter Parameter for SQL Injection:</label>
+                <input type="text" id="param" name="param" placeholder="param">
+            </div>
+
+            <div id="cookieDiv" style="display: none;">
+                <label for="session_cookie">Enter Session Cookie (for XXE):</label>
+                <input type="text" id="session_cookie" name="session_cookie" placeholder="session=abcd1234">
+            </div>
+
+            <button type="submit">Scan</button>
+        </form>
+    </div>
+    <script>
+        function showParamInput(value) {
+            var paramDiv = document.getElementById('paramDiv');
+            var cookieDiv = document.getElementById('cookieDiv');
+            if (value == '4' || value == '6') {
+                paramDiv.style.display = 'block';
+            } else {
+                paramDiv.style.display = 'none';
+            }
+
+            if (value == '3' || value == '6') {
+                cookieDiv.style.display = 'block';
+            } else {
+                cookieDiv.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
